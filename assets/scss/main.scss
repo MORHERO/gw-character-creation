@@ -57,7 +57,6 @@ main {
 
 .module {
 	padding: 10px;
-
 }
 
 .button, button {
@@ -86,13 +85,4 @@ main {
 @import "templates/navigation";
 @import "templates/footer";
 
-@import "modules/clock";
-@import "modules/calendar";
-@import "modules/dice";
-
-@import "modules/customrules";
-@import "modules/item-list";
-@import "modules/map";
-@import "modules/player-list";
-@import "modules/rulesearch";
-@import "modules/writing";
+@import "modules/main-creation-form";

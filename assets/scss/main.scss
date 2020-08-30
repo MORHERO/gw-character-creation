@@ -29,7 +29,7 @@ main {
 
 .main-flex {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: center;
 }
 
 .flex {
@@ -66,7 +66,14 @@ main {
 	margin-right: 2px;
 	color: $cl-grey;
 	cursor: pointer;
-
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+	supported by Chrome, Edge, Opera and Firefox */
+	
 	&:hover {
 		background-color: $cl-main-dark;
 	}
@@ -76,6 +83,27 @@ main {
 		border: 1px $cl-grey solid;
 	}
 }
+.input-box {
+	margin: 10px 12px 16px;
+}
+.input-wrap {
+	text-align: center;
+	margin:20px;
+	font-size: $font-s;
+	font-weight: bold;
+	input, button {
+		min-width: 250px;
+		font-size: $font-s;
+		background-color: $cl-main-black-60;
+		color: $cl-grey;
+	}
+	button {
+		margin-top: $font-s;
+
+		
+	}
+}
+
 
 
 /*-----|| import content ||----------------------------------------------------------*/
@@ -85,4 +113,5 @@ main {
 @import "templates/navigation";
 @import "templates/footer";
 
-@import "modules/main-creation-form";
+@import "modules/main-slider";
+@import "modules/accordion";

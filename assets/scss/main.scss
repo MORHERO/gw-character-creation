@@ -92,7 +92,7 @@ main {
 	font-size: $font-s;
 	font-weight: bold;
 	input, button {
-		min-width: 250px;
+		min-width: 150px;
 		font-size: $font-s;
 		background-color: $cl-main-black-60;
 		color: $cl-grey;
@@ -115,3 +115,5 @@ main {
 
 @import "modules/main-slider";
 @import "modules/accordion";
+
+@import "modules/slides/1_base";

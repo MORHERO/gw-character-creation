@@ -89,11 +89,11 @@ class SLIDE {
 	}
 
 	get_empty_input_fields() {
-		let inputs = this.parent.querySelectorAll('input, select');
+		let inputs = this.parent.querySelectorAll('input[required=true]');
 		let empty_inputs = [];
 
 		for (let i = 0; i < inputs.length; ++i) {
-			if(inputs[i].nodeName == 'INPUT' && inputs[i].type == 'text') {
+			if(inputs[i].nodeName == 'INPUT' && inputs[i].type == 'text' || inputs[i].type == 'number') {
 				let v = inputs[i].value.replace(/\s/g, '');
 				
 				if(inputs[i].value == "") {
@@ -111,7 +111,7 @@ class SELECT {
 		const that = this;
 
 		this.parent = parent;
-		this.help_content = help_content;
+		this.content = help_content;
 		this.active_option_id = this.parent.value;
 		this.help_box_element = this.parent.parentElement.parentElement.querySelector('.help-box .inner');
 
@@ -124,19 +124,36 @@ class SELECT {
 		this.active_option_id = this.parent.value;
 
 		this.change_help_content();
+		this.change_content();
 		return;
 	}
 
 	change_help_content() {
-		let content = document.createElement('p');
-		content.innerHTML = this.help_content[this.active_option_id];
+		let content_elem = document.createElement('p');
+		content_elem.innerHTML = this.content[this.active_option_id].help_text;
 
 		this.help_box_element.innerHTML = "";
 
-		this.help_box_element.append(content);
+		this.help_box_element.append(content_elem);
 
 		return;
 	}
+
+	change_content() {
+		let active_content = this.content[this.active_option_id];
+
+		for (let i = 0; i < active_content.inputs.length; ++i) {
+			let input_elem = document.querySelector('input[name='+  active_content.inputs[i].id +']');
+
+			input_elem.min = active_content.inputs[i].min;
+			input_elem.max = active_content.inputs[i].max;
+		}
+
+		return;
+	}
+
+
+
 }
 
 // state(BOOLEAN) => true == deactivate, false == active
@@ -169,20 +186,215 @@ for (let i = 0; i < accordion_elements.length; ++i) {
 
 let select_elements = document.querySelectorAll('select');
 var select_list = [];
-var select_help_content_list = [
+var select_content_list = [
 		{
-			'race_human': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-			'race_elb': 'This is the elb text',
-			'race_dwarf': 'dwarfy dwarfo',
-			'race_ork': 'ork no good rok great',
-			'race_reptiloid': 'reptiloido',
-			'race_gnom': 'gnom text',
-			'race_werewolf': 'where is the wolf',
-			'race_varg': 'varg you',
-			'race_ent': 'ent of the world',
-			'race_fee': 'fee mee'
+			'race_human':  {
+				'help_text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 100
+					},
+					{
+						'id': 'base_height',
+						'min': 150,
+						'max': 215
+					},
+					{
+						'id': 'base_weight',
+						'min': 50,
+						'max': 160
+					},
+				]
+			},
+			'race_elb': {
+				'help_text': 'This is the elb text',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 250
+					},
+					{
+						'id': 'base_height',
+						'min': 170,
+						'max': 235
+					},
+					{
+						'id': 'base_weight',
+						'min': 50,
+						'max': 120
+					},
+				]
+			},
+			'race_dwarf': {
+				'help_text': 'dwarfy dwarfo',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 300
+					},
+					{
+						'id': 'base_height',
+						'min': 80,
+						'max': 135
+					},
+					{
+						'id': 'base_weight',
+						'min': 40,
+						'max': 110
+					},
+				]
+			},
+			'race_ork': {
+				'help_text': 'ork no good rok great',
+				'inputs': [
+						{
+						'id': 'base_age',
+						'min': 0,
+						'max': 80
+					},
+					{
+						'id': 'base_height',
+						'min': 185,
+						'max': 255
+					},
+					{
+						'id': 'base_weight',
+						'min': 90,
+						'max': 160
+					},
+				]
+			},
+			'race_reptiloid': {
+				'help_text': 'reptiloido',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 320
+					},
+					{
+						'id': 'base_height',
+						'min': 160,
+						'max': 225
+					},
+					{
+						'id': 'base_weight',
+						'min': 70,
+						'max': 130
+					},
+				]
+			},
+			'race_gnom': {
+				'help_text': 'gnom text',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 400
+					},
+					{
+						'id': 'base_height',
+						'min': 50,
+						'max': 100
+					},
+					{
+						'id': 'base_weight',
+						'min': 15,
+						'max': 40
+					},
+				]
+			},
+			'race_werewolf': {
+				'help_text': 'where is the wolf',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 120
+					},
+					{
+						'id': 'base_height',
+						'min': 180,
+						'max': 225
+					},
+					{
+						'id': 'base_weight',
+						'min': 60,
+						'max': 150
+					},
+				]
+			},
+			'race_varg': {
+				'help_text': 'varg you',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 140
+					},
+					{
+						'id': 'base_height',
+						'min': 185,
+						'max': 240
+					},
+					{
+						'id': 'base_weight',
+						'min': 80,
+						'max': 160
+					},
+				]
+			},
+			'race_ent': {
+				'help_text': 'ent of the world',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 1800
+					},
+					{
+						'id': 'base_height',
+						'min': 280,
+						'max': 560
+					},
+					{
+						'id': 'base_height',
+						'min': 280,
+						'max': 850
+					},
+				]
+			},
+			'race_fee': {
+				'help_text': 'fee mee',
+				'inputs': [
+					{
+						'id': 'base_age',
+						'min': 0,
+						'max': 1200
+					},
+					{
+						'id': 'base_height',
+						'min': 8,
+						'max': 20
+					// weight is 10 x gram not kg
+					},
+					{
+						'id': 'base_weight',
+						'min': 1,
+						'max': 5
+					},
+				]
+			}
 		}
 	];
 for (let i = 0; i < select_elements.length; ++i) {
-	select_list.push(new SELECT(select_elements[i], select_help_content_list[i]));
+	select_list.push(new SELECT(select_elements[i], select_content_list[i]));
 }
+
+// TODO:
+// check input max min if correct input is made
+// improve help boxes generated by js
